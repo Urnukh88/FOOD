@@ -16,9 +16,9 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/authentication", userRouter);
-// app.use("/food", foodRouter);
-// app.use("/FoodOrder", foodOrderRouter);
-// app.use("/category");
+app.use("/food", foodRouter);
+app.use("/FoodOrder", foodOrderRouter);
+app.use("/category");
 
 connectToMongoDB();
 app.listen(port, () => {
