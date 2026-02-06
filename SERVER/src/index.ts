@@ -10,7 +10,7 @@ configDotenv();
 
 const app: Application = express();
 
-const port = 8000;
+const port = 10000;
 
 app.use(cors());
 app.use(express.json());
@@ -22,5 +22,5 @@ app.use("/FoodOrder", foodOrderRouter);
 
 app.listen(port, () => {
   connectToMongoDB();
-  console.log("http://localhost:8000");
+  console.log("http://localhost:10000");
 });
