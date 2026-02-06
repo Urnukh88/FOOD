@@ -15,9 +15,10 @@ const port = 8000;
 app.use(cors());
 app.use(express.json());
 
-app.use("/users", userRouter);
+app.use("/authentication", userRouter);
 app.use("/food", foodRouter);
-app.use("/food-orders", foodOrderRouter);
+app.use("/FoodOrder", foodOrderRouter);
+// app.use("/category");
 
 app.listen(port, () => {
   connectToMongoDB();
