@@ -7,8 +7,7 @@ export const sendVerificationEmail = async (
   verifyEmail: string,
 ) => {
   await resend.emails.send({
-    // from: "onboarding@resend.dev",
-    from: "urnukhurnuh@gmail.com",
+    from: "onboarding@resend.dev",
     to: receiver,
     subject: "Verify your email",
     html: `
