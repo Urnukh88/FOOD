@@ -1,4 +1,3 @@
-import nodemailer from "nodemailer";
 import { configDotenv } from "dotenv";
 import { Resend } from "resend";
 configDotenv();
@@ -8,7 +7,8 @@ export const sendVerificationEmail = async (
   verifyEmail: string,
 ) => {
   await resend.emails.send({
-    from: "onboarding@resend.dev",
+    // from: "onboarding@resend.dev",
+    from: "urnukhurnuh@gmail.com",
     to: receiver,
     subject: "Verify your email",
     html: `
