@@ -26,12 +26,9 @@ export const resetPassword = async (req: Request, res: Response) => {
         message: "User not found",
       });
     }
-
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-
     user.password = hashedPassword;
     await user.save();
-
     return res.status(200).json({
       message: "Password successfully changed",
     });
