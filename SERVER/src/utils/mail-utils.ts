@@ -12,7 +12,7 @@ export const sendVerificationEmail = async (
     subject: "Verify your email",
     html: `
     <a href="${verifyEmail}">
-    <div style="width:300px;height:300px;background-color:blue;color:white;display:flex;align-items:center;justify-content:center;">
+    <div style="width:150px;height:150px;background-color:aqua;color:black;display:flex;align-items:center;justify-content:center; padding-left:30px; padding-top:30px">
     VERIFY EMAIL
     </div>
     </a>

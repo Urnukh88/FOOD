@@ -1,44 +1,3 @@
-// import { Request, Response } from "express";
-// import { UserModel } from "../../schema";
-// import jwt from "jsonwebtoken";
-// import bcrypt from "bcrypt";
-
-// export const resetPassword = async (req: Request, res: Response) => {
-//   try {
-//     const { token } = req.query;
-
-//     const { newPassword } = req.body;
-
-//     if (!token || !newPassword) {
-//       return res.status(400).json({
-//         message: "Token and new password are required",
-//       });
-//     }
-
-//     const decoded = jwt.verify(token as string, process.env.JWT_SECRET!) as {
-//       email: string;
-//     };
-
-//     const user = await UserModel.findOne({ email: decoded.email });
-
-//     if (!user) {
-//       return res.status(404).json({
-//         message: "User not found",
-//       });
-//     }
-//     const hashedPassword = await bcrypt.hash(newPassword, 10);
-//     user.password = hashedPassword;
-//     await user.save();
-//     return res.status(200).json({
-//       message: "Password successfully changed",
-//     });
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(401).json({
-//       message: "Invalid or expired token",
-//     });
-//   }
-// };
 import { Request, Response } from "express";
 import { UserModel } from "../../schema";
 import jwt from "jsonwebtoken";
@@ -60,11 +19,9 @@ export const authResetPassword = async (req: Request, res: Response) => {
 
     await sendVerificationEmail(user.email, resetToken);
 
-    return res
-      .status(200)
-      .json({ message: "Reset email sent. Check your inbox!" });
+    return res.status(200).json({ message: "Reset email sent." });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Something went wrong" });
+    return res.status(500).json({ message: "server error" });
   }
 };
