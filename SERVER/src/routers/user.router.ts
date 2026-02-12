@@ -9,8 +9,8 @@ import {
 import { Router } from "express";
 
 export const userRouter = Router();
-userRouter.post("/user-signup", createNewUser);
-userRouter.post("/user-signin", SignIncontroller);
+userRouter.post("/signup", createNewUser);
+userRouter.post("/signin", SignIncontroller);
 userRouter.get("/verify-email", verifyEmailController);
 userRouter.post("/reset-password-request", resetPasswordRequest);
 userRouter.get("/verify-rpreq", verifyResetToken);
