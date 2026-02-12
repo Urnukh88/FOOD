@@ -26,7 +26,7 @@ export const createNewUser = async (req: Request, res: Response) => {
 
     await sendVerificationEmail(
       email,
-      `${process.env.TEST_API}/authentication/verify-email?token=${token}`,
+      `${process.env.TEST_API}/auth/verify-email?token=${token}`,
     );
     return res.status(201).json({
       success: true,

@@ -71,7 +71,7 @@ export const resetPasswordRequest = async (req: Request, res: Response) => {
       { expiresIn: "15m" },
     );
 
-    const resetLink = `https://food-0eii.onrender.com/authentication/reset-password?token=${resetToken}`;
+    const resetLink = `https://food-0eii.onrender.com/auth/reset-password-request?token=${resetToken}`;
 
     console.log("RESET LINK:", resetLink);
 
