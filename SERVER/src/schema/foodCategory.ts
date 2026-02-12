@@ -1,20 +1,21 @@
-import { models, model, Schema, ObjectId } from "mongoose";
+import { models, model, Schema, Models, Model } from "mongoose";
+import { Mode } from "node:fs";
 
 type FoodCategory = {
-  _id: ObjectId;
+  // _id: ObjectId;
   categoryName: String;
   createdAt: Date;
   updatedAt: Date;
 };
 
-export const FoodCategorySchema = new Schema<FoodCategory>(
+export const FoodcategorySchema = new Schema<FoodCategory>(
   {
     categoryName: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
   },
-  { _id: false },
+  // { _id: false },
 );
 
-export const Food_Category_Schema =
-  models["Foods"] || model("Foods", FoodCategorySchema);
+export const FoodCategorySchema: Model<FoodCategory> =
+  models["categories"] || model<FoodCategory>("categories", FoodcategorySchema);

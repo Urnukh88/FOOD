@@ -1,12 +1,27 @@
-import { Food_Category_Schema } from "../../schema";
+import { FoodCategorySchema } from "../../schema";
 import { Request, Response } from "express";
 
 export const createNewCategory = async (res: Response, req: Request) => {
   try {
     const { categoryName } = req.body;
-    const category = await Food_Category_Schema.create();
-    res.status(200).json({ message: "asdasdadsdsadsa" });
+
+    if (!categoryName || typeof categoryName !== "string") {
+      return res.status(400).send({ message: "Ctaegory name is requires" });
+    }
+
+    const existingCategory = await FoodCategorySchema.findOne({
+      categoryName: categoryName.trim(),
+    });
+
+    if (existingCategory)
+      return res.status(409).send({ message: "Already created" });
+
+    const category = await FoodCategorySchema.create({ categoryName });
+
+    return res
+      .status(200)
+      .send({ message: "Created succesfully", data: category });
   } catch (error) {
-    res.status(200).json({ message: "categoryyyyfdgdg", error });
+    res.status(200).json({ message: "Failed category", error });
   }
 };
