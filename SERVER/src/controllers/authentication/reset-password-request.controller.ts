@@ -51,6 +51,7 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { UserModel } from "../../schema";
+import { resetPassReq } from "../../utils/resetPassword-request-utils";
 
 export const resetPasswordRequest = async (req: Request, res: Response) => {
   try {
@@ -71,12 +72,12 @@ export const resetPasswordRequest = async (req: Request, res: Response) => {
       { expiresIn: "15m" },
     );
 
-    const resetLink = `https://food-0eii.onrender.com/auth/reset-password-request?token=${resetToken}`;
+    const passResetLink = `https://food-frontend.onrender.com/reset-password?token=${resetToken}`;
 
-    console.log("RESET LINK:", resetLink);
+    await resetPassReq(user.email, passResetLink, "");
 
     return res.status(200).json({
-      message: "Reset password link ilgeegdlee",
+      message: "Reset password email ilgeegdlee",
     });
   } catch (error) {
     return res.status(500).json({ message: "Server error", error });
