@@ -35,11 +35,10 @@ export const resetPassword = async (req: Request, res: Response) => {
   try {
     const { token, newPassword } = req.body;
 
-    if (!token || !newPassword) {
+    if (!token || !newPassword)
       return res
         .status(400)
-        .json({ message: "Token and new password are required" });
-    }
+        .json({ message: "Token and new password required" });
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
       id: string;
@@ -47,22 +46,14 @@ export const resetPassword = async (req: Request, res: Response) => {
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    const user = await UserModel.findByIdAndUpdate(
-      decoded.id,
-      { password: hashedPassword },
-      { new: true },
-    );
-
-    if (!user) {
-      return res.status(404).json({ message: "User oldsongui" });
-    }
-
-    return res.status(200).json({
-      message: "Password amjilttai soligdloo",
+    const user = await UserModel.findByIdAndUpdate(decoded.id, {
+      password: hashedPassword,
     });
-  } catch (error) {
-    return res.status(400).json({
-      message: "Invalid or expired token",
-    });
+
+    if (!user) return res.status(404).json({ message: "User oldsongui" });
+
+    return res.status(200).json({ message: "Password amjilttai soligdloo" });
+  } catch {
+    return res.status(400).json({ message: "Invalid or expired token" });
   }
 };

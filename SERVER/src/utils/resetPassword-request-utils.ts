@@ -1,29 +1,37 @@
-import { configDotenv } from "dotenv";
 import { Resend } from "resend";
+import { configDotenv } from "dotenv";
 
 configDotenv();
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export const resetPassReq = async (
+export const sendResetPasswordEmail = async (
   receiver: string,
-  passResetLink: string,
-  otp: string,
+  resetLink: string,
 ) => {
   try {
-    const { data, error } = await resend.emails.send({
+    await resend.emails.send({
       from: "onboarding@resend.dev",
       to: receiver,
-      subject: "forgot password? click here",
+      subject: "Reset your password",
       html: `
-    <a href="${passResetLink}">
-    <div style="width:150px;height:150px;background-color:aqua;color:black;display:flex;align-items:center;justify-content:center; padding-left:30px; padding-top:30px">
-    VERIFY EMAIL
-    </div>
-    </a>
-    `,
+        <div style="text-align:center; font-family:sans-serif;">
+          <h2>Password Reset Request</h2>
+          <p>Click the button below to reset your password. This link is valid for 15 minutes.</p>
+          <a href="${resetLink}" style="
+            display:inline-block;
+            padding:10px 20px;
+            background-color:#00bfff;
+            color:white;
+            text-decoration:none;
+            border-radius:5px;
+            font-weight:bold;
+          ">RESET PASSWORD</a>
+        </div>
+      `,
     });
+    console.log("Email sent to:", receiver);
   } catch (error) {
-    console.error(error);
+    console.error("Resend error:", error);
   }
 };
