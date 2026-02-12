@@ -9,13 +9,12 @@ export const sendVerificationEmail = async (
   await resend.emails.send({
     from: "onboarding@resend.dev",
     to: receiver,
-    subject: "Verify your email",
+    subject: "Амжилттай бүртгэгдлээ",
     html: `
-    <a href="${verifyEmail}">
-    <div style="width:150px;height:150px;background-color:aqua;color:black;display:flex;align-items:center;justify-content:center; padding-left:30px; padding-top:30px">
-    VERIFY EMAIL
-    </div>
-    </a>
-    `,
+        <div style="font-family:sans-serif; text-align:center;">
+          <h2>Амжилттай бүртгэгдлээ</h2>
+          <p>Таны бүртгэл амжилттай боллоо.</p>
+        </div>
+      `,
   });
 };
