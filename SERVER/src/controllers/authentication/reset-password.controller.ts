@@ -1,31 +1,3 @@
-// import { Request, Response } from "express";
-// import { UserModel } from "../../schema";
-// import jwt, { JwtPayload } from "jsonwebtoken";
-// import bcrypt from "bcrypt";
-
-// export const newPassword = async (req: Request, res: Response) => {
-//   try {
-//     const { token } = req.query;
-
-//     const { newPassword } = req.body;
-
-//     const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-//     const decoded = jwt.decode(String(token)) as JwtPayload;
-
-//     const { email } = decoded;
-
-//     const updateUser = await UserModel.findOneAndUpdate(
-//       { email },
-//       { password: hashedPassword },
-//       { new: true },
-//     );
-//     return res.status(200).send({ message: "success", updateUser });
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(401).json({ message: "error", error });
-//   }
-// };
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
