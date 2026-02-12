@@ -1,61 +1,41 @@
 // import { Request, Response } from "express";
-// import { UserModel } from "../../schema";
 // import jwt from "jsonwebtoken";
-// import otpgenerator from "otp-generator";
-// import { resetPassReq } from "../../utils/resetPassword-request-utils";
-// import { OTPModel } from "../../schema";
+// import { UserModel } from "../../schema";
+// import { sendResetTokenEmail } from "../../utils/resetPassword-request-utils";
 
-// export const authResetPasswordReq = async (req: Request, res: Response) => {
+// export const resetPasswordRequest = async (req: Request, res: Response) => {
 //   try {
 //     const { email } = req.body;
+//     if (!email) return res.status(400).json({ message: "Email required" });
 
 //     const user = await UserModel.findOne({ email });
-
-//     if (!user) return res.status(404).json({ message: "Hereglegch oldsongui" });
+//     if (!user) return res.status(404).json({ message: "User oldsongui" });
 
 //     const resetToken = jwt.sign(
-//       { _id: user._id },
+//       { id: user._id },
 //       process.env.JWT_SECRET as string,
-//       { expiresIn: "1h" },
+//       { expiresIn: "15m" },
 //     );
 
-//     const otp = otpgenerator.generate(6, {
-//       digits: true,
-//       lowerCaseAlphabets: false,
-//       upperCaseAlphabets: false,
-//       specialChars: false,
-//     });
-//     await OTPModel.create({
-//       userId: user._id,
-//       otp,
-//     });
+//     const resetLink = `https://food-frontend.onrender.com/reset-password?token=${resetToken}`;
 
-//     await resetPassReq(
-//       email,
-//       `${process.env.TEST_API}/authentication/request-reset?token=${resetToken}`,
-//       otp,
-//     );
+//     await sendResetTokenEmail(user.email, resetLink);
 
-//     return res
-//       .status(200)
-//       .redirect(
-//         `https://food-0eii.onrender.com/authentication/request-reset?token=${resetToken}`,
-//       );
+//     return res.status(200).json({ message: "Email ilgeegdlee" });
 //   } catch (error) {
 //     console.error(error);
-//     return res
-//       .status(500)
-//       .json({ message: "cannot reset password", error: error });
+//     return res.status(500).json({ message: "Server error" });
 //   }
 // };
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { UserModel } from "../../schema";
-import { sendResetPasswordEmail } from "../../utils/resetPassword-request-utils";
+import { sendResetTokenEmail } from "../../utils/resetPassword-request-utils";
 
 export const resetPasswordRequest = async (req: Request, res: Response) => {
   try {
     const { email } = req.body;
+
     if (!email) return res.status(400).json({ message: "Email required" });
 
     const user = await UserModel.findOne({ email });
@@ -67,11 +47,11 @@ export const resetPasswordRequest = async (req: Request, res: Response) => {
       { expiresIn: "15m" },
     );
 
-    const resetLink = `https://food-frontend.onrender.com/reset-password?token=${resetToken}`;
+    await sendResetTokenEmail(user.email, resetToken);
 
-    await sendResetPasswordEmail(user.email, resetLink);
-
-    return res.status(200).json({ message: "Email ilgeegdlee" });
+    return res
+      .status(200)
+      .json({ message: "Reset token email-ээр ilgeegdlee" });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Server error" });

@@ -49,11 +49,10 @@ export const resetPassword = async (req: Request, res: Response) => {
     const user = await UserModel.findByIdAndUpdate(decoded.id, {
       password: hashedPassword,
     });
-
     if (!user) return res.status(404).json({ message: "User oldsongui" });
 
     return res.status(200).json({ message: "Password amjilttai soligdloo" });
-  } catch {
+  } catch (error) {
     return res.status(400).json({ message: "Invalid or expired token" });
   }
 };
