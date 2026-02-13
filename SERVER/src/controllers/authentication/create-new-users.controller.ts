@@ -21,9 +21,9 @@ export const createNewUser = async (req: Request, res: Response) => {
     const newUser = await UserModel.create({
       email,
       password: hashPassword,
-      phoneNumber: phoneNumber || "",
-      address: address || "",
-      role: role || "USER",
+      // phoneNumber: phoneNumber || "",
+      // address: address || "",
+      // role: role || "USER",
     });
 
     const token = jwt.sign({ email }, process.env.JWT_SECRET!, {
@@ -41,10 +41,10 @@ export const createNewUser = async (req: Request, res: Response) => {
       data: {
         id: newUser._id,
         email: newUser.email,
-        phoneNumber: newUser.phoneNumber,
-        address: newUser.address,
-        role: newUser.role,
-        isVerified: newUser.isVerified,
+        // phoneNumber: newUser.phoneNumber,
+        // address: newUser.address,
+        // role: newUser.role,
+        // isVerified: newUser.isVerified,
       },
     });
   } catch (error) {
