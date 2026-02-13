@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { UserModel } from "../../schema";
 import { sendResetTokenEmail } from "../../utils/resetPassword-request-utils";
+import { ResetTokenModel, TokenType } from "../../schema";
 
 export const resetPasswordRequest = async (req: Request, res: Response) => {
   try {
@@ -15,8 +16,15 @@ export const resetPasswordRequest = async (req: Request, res: Response) => {
     const resetToken = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET as string,
-      { expiresIn: "15m" },
+      { expiresIn: "1h" },
     );
+
+    await ResetTokenModel.create({
+      userId: user._id,
+      token: resetToken,
+      type: TokenType.RESET_PASSWORD,
+      expiresAt: new Date(Date.now() + 15 * 60 * 1000),
+    });
 
     await sendResetTokenEmail(user.email, resetToken);
 
