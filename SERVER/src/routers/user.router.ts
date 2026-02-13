@@ -13,5 +13,5 @@ userRouter.post("/signup", createNewUser);
 userRouter.post("/signin", SignIncontroller);
 userRouter.get("/verify-email", verifyEmailController);
 userRouter.post("/reset-password-request", resetPasswordRequest);
-userRouter.get("/verify-rpreq", verifyResetToken);
+userRouter.get("/verify-reset-pass-req", verifyResetToken);
 userRouter.post("/reset-password", resetPassword);

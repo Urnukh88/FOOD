@@ -42,7 +42,9 @@ const UserSchema = new Schema<User>(
       default: false,
     },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+  },
 );
 
 export const UserModel: Model<User> =
