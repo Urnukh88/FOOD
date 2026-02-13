@@ -17,13 +17,14 @@ export const createNewUser = async (req: Request, res: Response) => {
     }
 
     const hashPassword = await bcrypt.hash(password, 10);
+    const normalizedRole = role?.toUpperCase() === "ADMIN" ? "ADMIN" : "USER";
 
     const newUser = await UserModel.create({
       email,
       password: hashPassword,
       phoneNumber: phoneNumber || "",
       address: address || "",
-      role: role || "USER",
+      role: normalizedRole,
     });
 
     const token = jwt.sign({ email }, process.env.JWT_SECRET!, {
